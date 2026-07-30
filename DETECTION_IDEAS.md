@@ -77,7 +77,7 @@ These would help the project feel more current and modern.
   user confirmation or denial
 
 ## Mapping Ideas
-- Link each alert type to:
+- Expand the documented ATT&CK hypotheses into the application data model and link each alert type to:
   MITRE tactic
   MITRE technique
   response playbook

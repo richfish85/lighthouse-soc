@@ -65,4 +65,5 @@ Example:
 ## Delivery Notes
 - The current best demo path is `Reporter -> Analyst -> Admin`.
 - The current best verification path is `seed -> smoke -> Streamlit -> pytest`.
-- The current known environment gap is that `pytest` is not installed in the active MSYS2 Python environment.
+- The local validation baseline is `python -m pytest` plus `python -m app.cli smoke`.
+- GitHub Actions repeats both checks for pushes and pull requests.

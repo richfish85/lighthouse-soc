@@ -1,22 +1,24 @@
 # Lighthouse SOC — Incident Triage Simulator
 
-*A Python-based incident triage simulator demonstrating software engineering, systems design, and security workflow simulation and automation concepts.*
+[![Tests](https://github.com/richfish85/lighthouse-soc/actions/workflows/tests.yml/badge.svg)](https://github.com/richfish85/lighthouse-soc/actions/workflows/tests.yml)
 
-**Built as a learning project to demonstrate software engineering fundamentals relevant to junior technical engineering roles.**
+*A local, synthetic SOC lab for practising alert triage, evidence review, priority decisions, escalation, false-positive handling, and analyst handover.*
+
+**Built to demonstrate the working habits expected of a junior SOC analyst: establish scope, separate evidence from assumptions, choose a defensible severity, document actions, and hand a case to the next responder.**
 
 
 ## What is this?
 
-**Lighthouse SOC** is a lightweight security operations simulation platform built to model how incidents move from reporting to investigation and oversight.
+**Lighthouse SOC** is a lightweight security operations simulation platform built to model how incidents move from reporting through triage, investigation, escalation, closure, and oversight.
 
-Rather than replicating a full SIEM, this project focuses on core engineering concepts:
+Rather than claiming to be a full SIEM, this project focuses on a believable junior-analyst workflow:
 
-* Role-based workflows
-* Data modelling with SQLite
-* Python service-layer architecture
-* Incident scoring logic
-* CLI tooling and testing
-* Interactive dashboard development with Streamlit
+* Review the alert and enrichment evidence
+* Identify affected identities, assets, and likely scope
+* Prioritise by severity, confidence, asset criticality, and privilege
+* Apply a playbook and record analyst notes
+* Escalate, contain, close, or classify a false positive
+* Preserve a clear handover and audit trail
 
 It simulates three user roles:
 
@@ -45,24 +47,24 @@ It simulates three user roles:
 
 This project was designed as both:
 
-## 1. A Software Engineering Portfolio Project
+## 1. A SOC Analyst Practice Environment
 
 To demonstrate practical skills in:
 
-* Python development
-* SQL and data modelling
-* Service-oriented design
-* CLI tooling
-* Testing and debugging
-* UI prototyping
+* Alert and incident triage
+* Evidence-led severity and scope decisions
+* Playbook use and escalation judgment
+* False-positive documentation
+* Incident notes and responder handover
+* MITRE ATT&CK-informed investigation hypotheses
 
-## 2. A Systems Thinking Exercise
+## 2. A Security Systems Exercise
 
 To model how software components interact:
 
 * Intake → Processing → Scoring → Workflow → Reporting
 
-It intentionally emphasizes clean architecture over complexity.
+It intentionally emphasises transparent decisions and reproducible evidence over unnecessary complexity.
 
 ---
 
@@ -209,6 +211,19 @@ python -m pytest
 
 ---
 
+# Demo Workflow
+
+Use the app as a three-role walkthrough:
+
+1. Start as `reporter01` and submit a suspicious activity report.
+2. Switch to `analyst01` and investigate the generated incident.
+3. Review enrichment, apply playbook guidance, add notes, and update status.
+4. Switch to `admin01` and review dashboard metrics and incident oversight.
+
+![Lighthouse SOC app workflow](image/workflow/lighthouse_soc_app_workflow.svg)
+
+---
+
 # Demo Accounts
 
 | User       | Role     |
@@ -227,6 +242,31 @@ python -m pytest
 * Suspicious PowerShell
 * Repeated Failed Logins
 * Privilege Escalation Attempt
+
+---
+
+# Analyst Casebook and KQL
+
+All people, organisations, events, hostnames, and IP addresses in this repository are fictional or reserved for documentation. No production or customer data is included.
+
+The [analyst casebook](docs/ANALYST_CASEBOOK.md) contains four completed simulated investigations. Each write-up records:
+
+* initial signal and affected scope
+* evidence reviewed and assumptions still open
+* severity/priority rationale
+* MITRE ATT&CK hypothesis
+* containment, disposition, escalation, and handover
+
+The accompanying [KQL query pack](docs/kql/soc_triage_queries.kql) provides lab queries for the same scenarios. Table availability and field names vary by Microsoft Sentinel and Defender connector, so each query must be validated against the target workspace schema.
+
+| Simulated scenario | Disposition | ATT&CK-informed hypothesis |
+| --- | --- | --- |
+| Impossible travel on a privileged account | Escalated | T1078.004 Valid Accounts: Cloud Accounts |
+| Payroll-themed phishing link | Closed, no interaction observed | T1566.002 Phishing: Spearphishing Link |
+| Encoded PowerShell on an admin workstation | In review; L2 escalation recommended | T1059.001 Command and Scripting Interpreter: PowerShell |
+| Repeated failed logins during an approved exercise | False positive | T1110.001 Brute Force: Password Guessing |
+
+ATT&CK mappings describe investigation hypotheses, not proof of compromise.
 
 ---
 
@@ -251,6 +291,8 @@ diagrams/
 * ARCHITECTURE.md
 * THREAT_MODEL.md
 * DETECTION_IDEAS.md
+* docs/ANALYST_CASEBOOK.md
+* docs/kql/soc_triage_queries.kql
 
 ---
 
@@ -286,13 +328,11 @@ This MVP deliberately uses:
 # Future Extensions
 
 Planned ideas:
-* Audit logging
 * Identity integration (SSO / RBAC expansion)
-* Case management workflow
+* Richer case management workflow
 * Policy compliance mapping
-* MITRE ATT&CK mapping
+* Richer MITRE ATT&CK mapping in the application data model and UI
 * IOC enrichment integrations
-* Simulated case management
 * Detection rule tuning
 * Expanded RBAC permissions
 * API-backed alert sources
@@ -301,36 +341,42 @@ Planned ideas:
 
 # Why This Project Matters
 
-This project reflects the same foundational areas emphasized in junior engineering pathways:
+This project turns introductory security knowledge into visible analyst work:
 
-* Programming fundamentals
-* Data and logic modelling
-* APIs and service thinking
-* Debugging and testing
-* System decomposition
-* Secure workflow design
+* triage a queue without treating every alert as an incident
+* distinguish evidence, assumptions, and unanswered questions
+* explain severity, confidence, and affected scope
+* recognise when privileged assets require faster escalation
+* document false positives as carefully as confirmed threats
+* leave concise notes another analyst can continue from
 
-It was built as a practical learning project and as a stepping stone toward software engineering and technical operations roles.
+The supporting Python, SQLite, Streamlit, RBAC, testing, and audit features make those decisions reproducible. The goal is not to claim production SOC experience; it is to show a credible, honest foundation for an entry-level SOC or security-operations role.
 
 ---
 
 ## Screenshots
 
 
-<img width="1845" height="918" alt="image" src="https://github.com/user-attachments/assets/7e031f33-b5b5-41b6-b990-24d4ad39d6ae" />
+<img width="1845" height="918" alt="Lighthouse SOC login gateway with role-based demo access" src="https://github.com/user-attachments/assets/7e031f33-b5b5-41b6-b990-24d4ad39d6ae" />
 ### Login gateway
 
 
-<img width="1919" height="907" alt="image" src="https://github.com/user-attachments/assets/dd67d515-bcda-4022-bedf-cab6784f5ca6" />
+<img width="1919" height="907" alt="Analyst queue showing prioritized SOC incidents and filtering controls" src="https://github.com/user-attachments/assets/dd67d515-bcda-4022-bedf-cab6784f5ca6" />
 ### Analyst queue
 
 
-<img width="1919" height="906" alt="image" src="https://github.com/user-attachments/assets/b275dc24-e6ec-481e-b68b-ac510645e26d" />
+<img width="1919" height="906" alt="Incident investigation view with enrichment, playbook actions, and analyst notes" src="https://github.com/user-attachments/assets/b275dc24-e6ec-481e-b68b-ac510645e26d" />
 ### Investigation view
 
 
-<img width="1919" height="908" alt="image" src="https://github.com/user-attachments/assets/9d9e72fd-e6de-4a23-aa09-d87f5c6832c9" />
+<img width="1919" height="908" alt="Admin dashboard showing SOC metrics, incident trends, and oversight panels" src="https://github.com/user-attachments/assets/9d9e72fd-e6de-4a23-aa09-d87f5c6832c9" />
 ### Admin dashboard
+
+---
+
+## License
+
+MIT License. See [LICENSE](LICENSE).
 
 ---
 

@@ -1,0 +1,131 @@
+<svg width="1600" height="950" viewBox="0 0 1600 950" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">Lighthouse SOC app workflow</title>
+  <desc id="desc">A visual workflow showing how to seed and run Lighthouse SOC, then use Reporter, Analyst, and Admin roles to move an alert through triage.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1600" y2="950" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#07111F"/>
+      <stop offset="1" stop-color="#0C1B2E"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#FFD84A"/>
+      <stop offset="1" stop-color="#F4A300"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="16" stdDeviation="18" flood-color="#000000" flood-opacity="0.35"/>
+    </filter>
+    <marker id="arrow" markerWidth="14" markerHeight="14" refX="12" refY="7" orient="auto" markerUnits="strokeWidth">
+      <path d="M2 2L12 7L2 12V2Z" fill="#F4C542"/>
+    </marker>
+    <style>
+      .title { font: 800 54px Arial, sans-serif; fill: #F8FAFC; }
+      .subtitle { font: 400 24px Arial, sans-serif; fill: #B8C4D6; }
+      .section { font: 800 25px Arial, sans-serif; fill: #F8FAFC; letter-spacing: .8px; }
+      .label { font: 700 26px Arial, sans-serif; fill: #F8FAFC; }
+      .body { font: 400 20px Arial, sans-serif; fill: #C9D4E5; }
+      .small { font: 400 17px Arial, sans-serif; fill: #91A4BD; }
+      .mono { font: 700 17px Consolas, monospace; fill: #D9E4F5; }
+      .pillText { font: 800 16px Arial, sans-serif; fill: #07111F; }
+      .card { fill: #0F2034; stroke: #263B56; stroke-width: 2; rx: 22; filter: url(#shadow); }
+      .line { stroke: #F4C542; stroke-width: 5; stroke-linecap: round; marker-end: url(#arrow); }
+      .mutedLine { stroke: #39506E; stroke-width: 3; stroke-dasharray: 10 10; }
+    </style>
+  </defs>
+
+  <rect width="1600" height="950" fill="url(#bg)"/>
+  <circle cx="1390" cy="110" r="210" fill="#122D4A" opacity="0.55"/>
+  <circle cx="120" cy="830" r="260" fill="#081725" opacity="0.85"/>
+
+  <g transform="translate(78 72)">
+    <circle cx="50" cy="50" r="48" fill="#10243A" stroke="#F8FAFC" stroke-width="4"/>
+    <path d="M34 70H66L60 42H40L34 70Z" fill="#F8FAFC"/>
+    <path d="M44 42V28H56V42" stroke="#F8FAFC" stroke-width="6" stroke-linecap="round"/>
+    <path d="M58 35L92 24V53L58 42V35Z" fill="url(#gold)"/>
+    <path d="M18 78C34 66 49 85 66 73C78 65 87 66 99 75" stroke="#9FB4CC" stroke-width="4" stroke-linecap="round"/>
+  </g>
+
+  <text x="205" y="105" class="title">Lighthouse SOC</text>
+  <text x="208" y="145" class="subtitle">App workflow for demo, portfolio walkthrough, and interview use</text>
+
+  <g transform="translate(95 210)">
+    <rect class="card" width="305" height="185"/>
+    <rect x="28" y="28" width="92" height="32" rx="16" fill="url(#gold)"/>
+    <text x="48" y="51" class="pillText">SETUP</text>
+    <text x="28" y="94" class="label">1. Start local demo</text>
+    <text x="28" y="128" class="mono">pip install -r requirements.txt</text>
+    <text x="28" y="156" class="mono">python -m app.cli seed --reset</text>
+    <text x="28" y="184" class="mono">streamlit run app/main.py</text>
+  </g>
+
+  <line x1="430" y1="302" x2="525" y2="302" class="line"/>
+
+  <g transform="translate(555 210)">
+    <rect class="card" width="305" height="185"/>
+    <rect x="28" y="28" width="110" height="32" rx="16" fill="#6EA8FF"/>
+    <text x="49" y="51" class="pillText">LOGIN</text>
+    <text x="28" y="94" class="label">2. Choose a role</text>
+    <text x="28" y="130" class="body">Use seeded demo users:</text>
+    <text x="28" y="160" class="small">reporter01, analyst01, admin01</text>
+  </g>
+
+  <line x1="890" y1="302" x2="985" y2="302" class="line"/>
+
+  <g transform="translate(1015 210)">
+    <rect class="card" width="390" height="185"/>
+    <rect x="28" y="28" width="132" height="32" rx="16" fill="#7DD3A8"/>
+    <text x="48" y="51" class="pillText">OUTCOME</text>
+    <text x="28" y="94" class="label">3. Follow the incident</text>
+    <text x="28" y="130" class="body">Submit, triage, enrich, update,</text>
+    <text x="28" y="160" class="body">then review metrics and oversight.</text>
+  </g>
+
+  <path d="M1210 410V485" class="line"/>
+
+  <text x="100" y="505" class="section">ROLE-BASED DEMO PATH</text>
+  <line x1="100" y1="528" x2="1500" y2="528" class="mutedLine"/>
+
+  <g transform="translate(95 585)">
+    <rect class="card" width="390" height="250"/>
+    <circle cx="58" cy="58" r="28" fill="#1E3A5F" stroke="#6EA8FF" stroke-width="3"/>
+    <path d="M45 59H71M45 72H65M45 46H71" stroke="#D9E4F5" stroke-width="4" stroke-linecap="round"/>
+    <text x="105" y="65" class="label">Reporter</text>
+    <text x="32" y="115" class="body">Submit suspicious activity</text>
+    <text x="32" y="148" class="body">Attach evidence metadata</text>
+    <text x="32" y="181" class="body">Track own alert status</text>
+    <rect x="32" y="210" width="205" height="32" rx="16" fill="#223A57"/>
+    <text x="50" y="232" class="small">Creates alert record</text>
+  </g>
+
+  <line x1="515" y1="710" x2="615" y2="710" class="line"/>
+
+  <g transform="translate(645 585)">
+    <rect class="card" width="390" height="250"/>
+    <circle cx="58" cy="58" r="28" fill="#3A223F" stroke="#C084FC" stroke-width="3"/>
+    <path d="M46 72L58 42L70 72H46Z" stroke="#F5E8FF" stroke-width="4" stroke-linejoin="round"/>
+    <path d="M58 55V63" stroke="#F5E8FF" stroke-width="4" stroke-linecap="round"/>
+    <text x="105" y="65" class="label">Analyst</text>
+    <text x="32" y="115" class="body">Open queue and investigate</text>
+    <text x="32" y="148" class="body">Review enrichment and playbook</text>
+    <text x="32" y="181" class="body">Assign, note, escalate, close</text>
+    <rect x="32" y="210" width="222" height="32" rx="16" fill="#3B2B52"/>
+    <text x="50" y="232" class="small">Moves incident lifecycle</text>
+  </g>
+
+  <line x1="1065" y1="710" x2="1165" y2="710" class="line"/>
+
+  <g transform="translate(1195 585)">
+    <rect class="card" width="310" height="250"/>
+    <circle cx="58" cy="58" r="28" fill="#3B2D13" stroke="#F4C542" stroke-width="3"/>
+    <path d="M44 69H72M48 59H68M52 49H64" stroke="#FFF4BD" stroke-width="4" stroke-linecap="round"/>
+    <text x="105" y="65" class="label">Admin</text>
+    <text x="32" y="115" class="body">Review dashboard metrics</text>
+    <text x="32" y="148" class="body">Monitor backlog health</text>
+    <text x="32" y="181" class="body">Inspect incident oversight</text>
+    <rect x="32" y="210" width="190" height="32" rx="16" fill="#443714"/>
+    <text x="50" y="232" class="small">Shows SOC impact</text>
+  </g>
+
+  <g transform="translate(95 870)">
+    <text x="0" y="0" class="small">Validation path: python -m app.cli smoke | python -m pytest</text>
+    <text x="840" y="0" class="small">Design note: scoped simulator, not a production SIEM</text>
+  </g>
+</svg>

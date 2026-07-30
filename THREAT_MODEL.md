@@ -109,4 +109,4 @@ The value is also showing that we understand:
 - Confirm reporters only see their own alert records in the UI.
 - Confirm analysts can update incidents while reporters cannot.
 - Review `audit_log` after smoke tests to confirm lifecycle actions are captured.
-- Re-run tests after `pytest` is available in the environment.
+- Run `python -m pytest` and `python -m app.cli smoke` locally; GitHub Actions repeats both checks.

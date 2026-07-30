@@ -1,0 +1,66 @@
+// Lighthouse SOC — simulated KQL triage pack
+// Lab use only. No production or customer data is represented here.
+// Connector schemas and field availability vary. Validate table names, fields,
+// time zones, retention, and approved scope in the target Sentinel/Defender lab.
+// Run each numbered block separately.
+
+// 1) Cloud sign-ins: impossible travel / suspected valid account use
+// ATT&CK hypothesis: T1078.004 Valid Accounts: Cloud Accounts
+let InvestigationStart = ago(24h);
+SigninLogs
+| where TimeGenerated >= InvestigationStart
+| where UserPrincipalName =~ "olivia.chen@lighthouse.example"
+| project TimeGenerated, UserPrincipalName, IPAddress,
+          City = tostring(LocationDetails.city),
+          Country = tostring(LocationDetails.countryOrRegion),
+          AppDisplayName, ClientAppUsed, ResultType,
+          DeviceId = tostring(DeviceDetail.deviceId),
+          CorrelationId
+| order by TimeGenerated asc
+
+// 2) Failed-logon pattern: password guessing or authorised test activity
+// ATT&CK hypothesis: T1110.001 Brute Force: Password Guessing
+let FailureWindow = 15m;
+let FailureThreshold = 10;
+SigninLogs
+| where TimeGenerated >= ago(24h)
+| where tostring(ResultType) != "0"
+| summarize FailureCount = count(),
+            TargetUsers = dcount(UserPrincipalName),
+            Users = make_set(UserPrincipalName, 20),
+            Applications = make_set(AppDisplayName, 20)
+          by IPAddress, bin(TimeGenerated, FailureWindow)
+| where FailureCount >= FailureThreshold
+| order by FailureCount desc
+
+// 3) Endpoint process telemetry: encoded or hidden PowerShell
+// ATT&CK hypothesis: T1059.001 Command and Scripting Interpreter: PowerShell
+DeviceProcessEvents
+| where Timestamp >= ago(24h)
+| where FileName in~ ("powershell.exe", "pwsh.exe")
+| where ProcessCommandLine has_any ("-enc", "-encodedcommand", "frombase64string", "-windowstyle hidden", "-w hidden")
+| project Timestamp, DeviceName, AccountName, FileName, ProcessCommandLine,
+          InitiatingProcessFileName, InitiatingProcessCommandLine,
+          SHA256, ReportId
+| order by Timestamp desc
+
+// 4) Reported mail: link-based phishing scope and delivery review
+// ATT&CK hypothesis: T1566.002 Phishing: Spearphishing Link
+let SuspiciousSubject = "payroll";
+EmailEvents
+| where Timestamp >= ago(7d)
+| where Subject contains SuspiciousSubject
+| project Timestamp, NetworkMessageId, RecipientEmailAddress,
+          SenderFromAddress, SenderMailFromAddress, Subject,
+          DeliveryAction, DeliveryLocation, ThreatTypes,
+          ThreatNames, UrlCount, AttachmentCount
+| order by Timestamp desc
+
+// 5) Handover summary: open Lighthouse-style cases from a custom lab table
+// Replace LighthouseIncidents_CL with the custom table used in your lab.
+LighthouseIncidents_CL
+| where IncidentStatus_s !in ("Closed", "False Positive")
+| project TimeGenerated, IncidentId_s, Priority_s, Severity_s,
+          Confidence_s, AffectedUser_s, AffectedAsset_s,
+          MitreTechnique_s, IncidentStatus_s, AssignedTo_s
+| order by Priority_s asc, TimeGenerated desc
