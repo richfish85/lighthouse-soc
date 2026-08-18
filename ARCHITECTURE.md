@@ -1,129 +1,98 @@
-# ARCHITECTURE
+# Lighthouse SOC Architecture
 
 ## What
-Lighthouse SOC is a single-application SOC triage simulator with one shared backend, one shared SQLite database, and role-based UI flows.
 
-Core subsystems:
+Lighthouse SOC is a single local application with three role-oriented views, a reusable Python service layer, one SQLite database, and synthetic JSON context.
 
-- `Streamlit UI`
-- `Service layer`
-- `SQLite persistence`
-- `JSON-backed demo context`
-
-## Checklist
-- [x] One app
-- [x] Three roles
-- [x] Shared data model
-- [x] Thin UI over reusable services
-
-## Why
-The architecture is designed for clarity first.
-
-That means:
-
-- the UI can change without rewriting triage logic
-- tests can hit services directly
-- future API routes can mirror existing service boundaries
-
-Example:
-
-- today `create_alert()` is used by the Streamlit reporter form
-- later the same function can back `POST /api/alerts`
-
-## Checklist
-- [x] Service-first design
-- [x] Future API shape reflected in naming
-- [x] Minimal infrastructure overhead
-
-## How
-## High-Level Shape
 ```text
 Reporter / Analyst / Admin
-          |
-      Streamlit
-          |
-     Service Layer
-          |
-       SQLite DB
-          |
-   JSON Sample Context
+            |
+        Streamlit UI
+            |
+       Service layer
+   intake | enrichment | scoring
+   incidents | playbooks | metrics
+            |
+        SQLite database
+            |
+      JSON demo context
 ```
 
-## Core Modules
-- `app/database.py`
-  Creates the schema and manages SQLite connections.
-- `app/seed.py`
-  Loads deterministic demo data into the database.
-- `app/auth.py`
-  Resolves seeded users and supports simple demo login.
-- `app/roles.py`
-  Defines roles, permissions, and RBAC checks.
-- `app/services/intake.py`
-  Creates alerts and auto-opens incidents.
-- `app/services/enrichment.py`
-  Combines IP reputation, asset context, and identity baselines.
-- `app/services/scoring.py`
-  Converts risk signals into `P1` through `P5`.
-- `app/services/incidents.py`
-  Owns assignment, notes, escalation, and status changes.
-- `app/services/metrics.py`
-  Builds dashboard totals and chart-ready aggregations.
-- `app/services/playbooks.py`
-  Retrieves response guidance by alert type.
+## Why
 
-## Data Model
-- `users`
-  Demo application users.
-- `alerts`
-  Reporter-submitted or ingested alert records.
-- `incidents`
-  Analyst-owned triage records linked one-to-one with alerts for the MVP.
-- `enrichment`
-  Context added around an incident.
-- `notes`
-  Analyst and system notes attached to incidents.
-- `playbooks`
-  Alert-type response guidance.
-- `audit_log`
-  Change trace for incident actions.
+The design keeps the MVP easy to run and easy to explain:
 
-## Request And Data Flow
-### Reporter flow
-1. Reporter logs in with a seeded demo user.
-2. Reporter submits an alert in Streamlit.
-3. `create_alert()` writes the alert to SQLite.
-4. `open_incident()` auto-creates an incident.
-5. `build_enrichment()` and `score_incident()` add context and priority.
+- triage logic is testable without rendering the UI
+- the UI remains a thin presentation layer
+- seeded data makes a review reproducible
+- service boundaries leave a clean path to a future API without requiring one now
 
-### Analyst flow
-1. Analyst loads queue data with filters.
-2. Analyst opens an incident.
-3. Incident detail joins alert, enrichment, notes, assignee, and playbook data.
-4. Analyst assigns, notes, escalates, or updates status.
-5. Actions are written to `incidents`, `alerts`, `notes`, and `audit_log`.
+## How
 
-### Admin flow
-1. Admin loads dashboard metrics.
-2. `get_dashboard_metrics()` aggregates counts and chart data.
-3. Admin opens oversight to review specific incident details and notes.
+### Main modules
 
-## Design Decisions
-- `SQLite` instead of an ORM:
-  simpler for a small deterministic MVP.
-- `Streamlit` instead of a larger web framework:
-  faster delivery of a polished demo.
-- `JSON` seed context:
-  easier to inspect, edit, and present in a portfolio repo.
-- `RBAC in services`:
-  important because UI page visibility alone is not enough.
+| Module | Responsibility |
+| --- | --- |
+| `app/database.py` | Schema creation and SQLite connections |
+| `app/seed.py` | Deterministic users, alerts, assets, reputation, and playbooks |
+| `app/auth.py`, `app/roles.py` | Demo identity and role/permission checks |
+| `app/services/intake.py` | Alert creation and incident opening |
+| `app/services/enrichment.py` | Synthetic IP, asset, and identity context |
+| `app/services/scoring.py` | Explainable severity and priority calculation |
+| `app/services/incidents.py` | Assignment, notes, escalation, containment, and status changes |
+| `app/services/playbooks.py` | Alert-type response guidance |
+| `app/services/metrics.py` | Admin totals and chart-ready aggregations |
+| `app/ui/` | Streamlit role views and shared visual components |
 
-## Assumptions
-- This is a single-user or low-concurrency demo environment.
-- A one-alert-to-one-incident mapping is acceptable for v1.
-- Seeded users are enough for demos and tests.
+### Core data model
 
-## Validation Hooks
-- `python -m app.cli seed --reset`
-- `python -m app.cli smoke`
-- `streamlit run app/main.py`
-- `python -m pytest`
+```text
+users 1 ---- * alerts 1 ---- 1 incidents
+                         |          |
+                         |          +---- * notes
+                         |          +---- 1 enrichment
+                         |          +---- * audit_log
+                         |
+                         +---- 1 playbook selection by alert type
+```
+
+The one-alert-to-one-incident mapping is a deliberate v0.1 simplification. It keeps the case lifecycle visible while leaving room for a richer case model later.
+
+### Request flows
+
+Reporter:
+
+1. A seeded reporter submits a suspicious activity report.
+2. Intake writes the alert and opens its incident.
+3. Enrichment and scoring attach synthetic context and a priority.
+
+Analyst / Responder:
+
+1. The queue loads incidents with filters.
+2. The investigation view joins alert, enrichment, notes, assignee, and playbook data.
+3. Actions write lifecycle changes and audit records.
+
+Admin / SOC Lead:
+
+1. Dashboard metrics aggregate current alert and incident state.
+2. Oversight exposes backlog and case details without changing the analyst workflow.
+
+## Design decisions and assumptions
+
+- **SQLite over an ORM:** fewer moving parts for a deterministic local lab.
+- **Streamlit over a larger frontend:** fast to run and sufficient for the current prototype.
+- **Rule-based scoring over ML:** reviewers can inspect why a case reached P1-P5.
+- **Seeded login:** acceptable for a demo, not an authentication control.
+- **Synthetic enrichment:** demonstrates evidence handling without contacting external services or processing real data.
+- **Low concurrency:** the current data model assumes one demonstrator or a small local session.
+
+## Validation hooks
+
+```powershell
+python -m app.cli seed --reset
+python -m app.cli smoke
+python -m pytest
+streamlit run app/main.py
+```
+
+For trust boundaries and deferred security controls, see [THREAT_MODEL.md](THREAT_MODEL.md).
