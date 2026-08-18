@@ -1,69 +1,58 @@
-# ROADMAP
+# Lighthouse SOC Roadmap
 
 ## What
-This roadmap shows where Lighthouse SOC is today and what should come next.
 
-The current version is an MVP focused on one believable SOC workflow:
+Lighthouse SOC is currently a presentable v0.1 portfolio baseline: a local Streamlit simulator that carries a synthetic alert from Reporter intake through Analyst investigation to Admin oversight.
 
-- submit an alert
-- triage it
-- investigate it
-- update status
-- review admin metrics
+## v0.1 — Presentable baseline
 
-## Checklist
-- [x] Define MVP scope
-- [x] Implement role-based simulator
-- [x] Add portfolio-ready docs and diagrams
-- [ ] Expand analyst tooling beyond MVP
-- [ ] Add stronger auth and reporting later
+Completed:
 
-## Why
-The project is intentionally phased.
+- [x] Reporter, Analyst / Responder, and Admin / SOC Lead flows
+- [x] SQLite persistence with deterministic JSON seed data
+- [x] Enrichment, transparent P1-P5 scoring, playbooks, notes, escalation, and status changes
+- [x] Admin metrics and incident oversight
+- [x] CLI bootstrap and smoke workflow
+- [x] Pytest coverage and GitHub Actions validation
+- [x] Casebook, KQL lab queries, diagrams, threat model, and portfolio documentation
 
-That helps in two ways:
+## v0.2 — Make the workflow deeper
 
-- the MVP stays clean and explainable
-- later enhancements have a clear place to land
+The next milestone is intentionally narrow. Each item should improve a visible analyst or responder decision:
 
-Example:
+- [ ] Reporter: validate intake edge cases and make follow-up evidence requests clearer
+- [ ] Analyst: show score explanations and a richer incident timeline in the investigation view
+- [ ] Analyst: add focused search across users, assets, and prior alerts
+- [ ] Admin: add CSV export and backlog/triage trend views
+- [ ] Platform: replace seeded login with a stronger local session and authentication boundary
+- [ ] Quality: add regression tests for role permissions and the most important UI actions
 
-- `Streamlit + SQLite` is right for a demo today
-- a future `Flask/FastAPI + real auth` layer can come later if the project grows
+## Later, if the project earns it
 
-## Checklist
-- [x] Keep v1 simple
-- [x] Leave room for v2
-- [x] Make priorities visible to reviewers
+- simulated JSONL/CSV detection feeds
+- richer playbook and detection-rule management
+- API routes that mirror the service layer
+- multi-user persistence options beyond SQLite
+- expanded ATT&CK mapping and response reporting
 
-## How
-## Phase 1 - Completed
-- Scaffold the repo structure for app code, data, diagrams, docs, and tests.
-- Add seeded demo users, sample alerts, playbooks, asset data, and reputation data.
-- Implement SQLite schema, seeding, RBAC, enrichment, scoring, incident lifecycle, and metrics.
-- Build Streamlit screens for Reporter, Analyst, and Admin.
-- Add CLI bootstrap and smoke workflow.
+These are candidates, not promises. The project should keep one coherent triage story before adding integrations or infrastructure.
 
-## Phase 2 - Next
-- Add richer analyst search across assets, users, and prior alerts.
-- Add admin reports export views and simple CSV export.
-- Add score explanation panels directly in the UI.
-- Add more timeline events to the audit log and expose them in the interface.
+## GitHub workflow
 
-## Phase 3 - Later
-- Replace seeded login with local auth and session handling.
-- Add API routes that mirror the current service layer.
-- Add attachment metadata handling beyond simple filenames.
-- Add persistence choices better suited to multi-user concurrency.
+Issues are grouped by role or platform area and tracked against the v0.2 milestone. The repository now has a small issue workflow using the milestone plus role/area labels. When a GitHub Projects board is enabled, use the same flow:
 
-## Phase 4 - Stretch
-- Add simulated detections ingestion from JSONL or CSV feeds.
-- Add analyst performance metrics and queue SLAs.
-- Add rule tuning and detection configuration workflows.
-- Add richer MITRE ATT&CK mapping and response playbook management.
+```text
+Backlog -> Ready -> In progress -> Review -> Done
+```
 
-## Delivery Notes
-- The current best demo path is `Reporter -> Analyst -> Admin`.
-- The current best verification path is `seed -> smoke -> Streamlit -> pytest`.
-- The local validation baseline is `python -m pytest` plus `python -m app.cli smoke`.
-- GitHub Actions repeats both checks for pushes and pull requests.
+Keep issues small enough to demonstrate one decision, one workflow improvement, or one validation result. Update the changelog when a user-visible behaviour or scope decision changes.
+
+## Demo path
+
+For a quick review, use:
+
+```text
+reporter01 -> submit an alert
+analyst01  -> investigate, document, and update it
+admin01    -> review the resulting metrics and oversight view
+```
