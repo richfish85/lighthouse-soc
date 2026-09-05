@@ -110,3 +110,7 @@ The value is also showing that we understand:
 - Confirm analysts can update incidents while reporters cannot.
 - Review `audit_log` after smoke tests to confirm lifecycle actions are captured.
 - Run `python -m pytest` and `python -m app.cli smoke` locally; GitHub Actions repeats both checks.
+
+## Training extension · 2026-09-05
+
+The public training lab serves synthetic curriculum and a client-side answer key. It does not connect to the incident SQLite database, accept uploads, collect learner accounts, or run response commands. Browser-local notes and answers are unencrypted device-local state, visible to others using that browser profile. Do not use real incident data. Scores can be inspected or changed locally and are not verified examinations. Imported local state is validated before use, and text is rendered through React rather than injected HTML. The optional WebMCP tool only opens an existing case; it cannot submit answers or execute response actions. The original seeded-role simulator remains a local-only tool.

@@ -2,9 +2,21 @@
 
 [![Tests](https://github.com/richfish85/lighthouse-soc/actions/workflows/tests.yml/badge.svg)](https://github.com/richfish85/lighthouse-soc/actions/workflows/tests.yml)
 
-**A local, synthetic SOC lab for practising alert triage, investigation, escalation, and analyst handover.**
+**A guided SOC training platform for practising evidence-led triage, investigation, response, and analyst handover.**
 
-Lighthouse SOC is a portfolio project built around one question: can a junior analyst turn an incoming signal into a clear, evidence-led next action? It is a deliberately small Streamlit application with SQLite persistence, seeded cases, explainable scoring, role-based screens, and a tested incident lifecycle.
+Lighthouse SOC is built around one question: can a junior analyst turn an incoming signal into a clear, evidence-led next action? The training lab offers six guided investigations, evidence records, decision feedback, a working notebook, and downloadable practice reports. The original Streamlit incident simulator retains SQLite persistence, role-based screens, and a tested incident lifecycle.
+
+## Training Lab · v0.2
+
+**[Try the public training demo](https://lighthouse-soc-training.richfish85245111.chatgpt.site)** — no learner account required; progress stays on your device.
+
+- Six cases covering phishing, identity, endpoint activity, data exposure, detection tuning, and incident handover.
+- Briefing → evidence room → three decisions → explained debrief.
+- Browser-local progress, retry support, and Markdown practice reports.
+- The same curriculum is available in the local Streamlit Training Lab.
+- Written handovers use an example and self-review checklist; only decisions are automatically scored.
+
+Read the [training walkthrough](docs/TRAINING_WALKTHROUGH.md) or [web app setup](training/README.md). No certification or professional-experience claim is attached to practice scores.
 
 > This is a learning simulator, not a production SIEM and not a claim of commercial SOC experience. All people, organisations, events, hostnames, and IP addresses are fictional or reserved for documentation.
 
@@ -53,7 +65,7 @@ The current implementation uses:
 
 The code is organised around reusable services rather than putting triage logic inside the UI. See [ARCHITECTURE.md](ARCHITECTURE.md) for the data flow and design trade-offs.
 
-## Current v0.1 scope
+## Original incident simulator scope
 
 - role-based demo login for Reporter, Analyst, and Admin
 - reporter intake and alert tracking
@@ -80,7 +92,7 @@ python -m app.cli smoke
 python -m pytest
 ```
 
-Demo accounts are seeded as `reporter01`, `analyst01`, and `admin01`.
+The application opens in **Training Lab**. Choose **Incident Simulator** in the sidebar for the original workflow. Demo accounts are seeded as `reporter01`, `analyst01`, and `admin01`.
 
 ## Walkthrough material
 
@@ -100,7 +112,7 @@ The MVP favours portability and explainability over production infrastructure:
 - Rule-based scoring keeps priority decisions reviewable.
 - Seeded login is suitable for a local demo; real authentication is future work.
 - External enrichment is represented by synthetic JSON context; no live customer or production data is used.
-- Streamlit is the current prototype surface; a separate API and richer frontend are later options, not current scope.
+- The React/Vinext web training surface is independently deployable from `training/`. It does not expose the local incident database or seeded logins.
 
 ## Screenshots
 

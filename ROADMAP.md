@@ -2,7 +2,7 @@
 
 ## What
 
-Lighthouse SOC is currently a presentable v0.1 portfolio baseline: a local Streamlit simulator that carries a synthetic alert from Reporter intake through Analyst investigation to Admin oversight.
+Lighthouse SOC v0.2 adds a guided training platform to the local Streamlit incident simulator. It supports an individual learner practising synthetic investigations; cohort administration and secure examinations are outside the current scope.
 
 ## v0.1 — Presentable baseline
 
@@ -16,7 +16,15 @@ Completed:
 - [x] Pytest coverage and GitHub Actions validation
 - [x] Casebook, KQL lab queries, diagrams, threat model, and portfolio documentation
 
-## v0.2 — Make the workflow deeper
+## v0.2 — Guided training platform
+
+- [x] Six cases with lessons, evidence, decisions, feedback, and handovers
+- [x] Browser training workspace with device-local progress and export
+- [x] Shared curriculum in the original Streamlit app
+- [x] Scoring, state validation, curriculum parity, and learner-flow tests
+- [x] Training walkthrough and explicit assessment boundaries
+
+## Candidate follow-up — Make the incident workflow deeper
 
 The next milestone is intentionally narrow. Each item should improve a visible analyst or responder decision:
 

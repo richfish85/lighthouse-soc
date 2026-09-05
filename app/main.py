@@ -15,7 +15,7 @@ from app.auth import list_demo_users, login_demo_user
 from app.seed import bootstrap_demo_data
 from app.services.incidents import list_incidents
 from app.services.intake import list_reporter_alerts
-from app.ui import admin, analyst, reporter, shell
+from app.ui import admin, analyst, reporter, shell, training
 
 
 st.set_page_config(page_title="Lighthouse SOC", layout="wide", initial_sidebar_state="collapsed")
@@ -254,6 +254,10 @@ def _render_left_rail(user: dict[str, object], page_registry: dict[str, object],
 
 
 def main() -> None:
+    mode = st.sidebar.radio("Workspace", ["Training Lab", "Incident Simulator"])
+    if mode == "Training Lab":
+        training.render()
+        return
     bootstrap_demo_data()
     shell.apply_theme()
 

@@ -1,5 +1,11 @@
 # Lighthouse SOC Architecture
 
+## Training platform extension · v0.2
+
+The shared `data/training_cases.json` curriculum feeds `app/services/training.py` and its independent web delivery copy in `training/app/cases.json`. Python tests require exact parity. Streamlit training uses session state without opening the incident database. The React/Vinext lab uses versioned browser local storage and generates local Markdown reports; it has no learner-data API. Decision scores are recomputed from the rubric rather than trusted from stored scores. The original incident architecture below remains in use for the Incident Simulator.
+
+See [Training walkthrough](docs/TRAINING_WALKTHROUGH.md) for the data-flow diagram, assumptions, threat notes, and validation boundaries.
+
 ## What
 
 Lighthouse SOC is a single local application with three role-oriented views, a reusable Python service layer, one SQLite database, and synthetic JSON context.

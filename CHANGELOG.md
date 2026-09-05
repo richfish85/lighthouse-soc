@@ -1,5 +1,16 @@
 # Lighthouse SOC Changelog
 
+## v0.2 — 2026-09-05
+
+- Added six guided synthetic investigations, 18 evidence records, 18 scored decisions, explanations, and handover self-review.
+- Added a responsive React training workspace with local progress, retries, a notebook, field guide, and downloadable reports.
+- Added the shared curriculum to Streamlit as its initial Training Lab; the original incident simulator remains selectable.
+- Added Python assessment and UI checks, web scoring/state/component checks, and curriculum parity validation.
+- Added a training walkthrough, deployment setup, and explicit privacy and assessment limitations.
+- Updated generated web dependencies to resolve the installation audit findings.
+- Published the public [training demo](https://lighthouse-soc-training.richfish85245111.chatgpt.site).
+- Validated 26 Python tests, 14 web tests, the incident smoke workflow, web typecheck/lint/build, and a clean dependency audit. Public page and favicon returned HTTP 200 without login.
+
 ## v0.1 — 2026-08-19
 
 This is the presentable portfolio baseline.
