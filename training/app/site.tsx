@@ -4,6 +4,7 @@ import { ArrowRight, BookOpen, CheckCircle2, ChevronRight, Layers3, Menu, Search
 import ProfilePage from './profile';
 import Brand from './brand';
 import Workspace from './workspace';
+import Simulation from './simulation';
 import { orientation } from './orientation';
 import './public.css';
 
@@ -16,6 +17,7 @@ export default function Site() {
     setPath(window.location.pathname.replace(/\/$/, '') || '/');
   }, []);
   if (path.startsWith('/training')) return <Workspace initialView={path === '/training/skills' ? 'skills' : path === '/training/progress' ? 'progress' : path === '/training/guide' ? 'guide' : 'path'}/>;
+  if (path === '/simulation') return <Simulation/>;
   const article = orientation.find(item => item.path === path);
   return <div className="public-site"><a className="skip-link" href="#public-main">Skip to content</a>
     <header className="public-header"><Brand light/><button className="menu-toggle" aria-label={menu ? 'Close navigation' : 'Open navigation'} aria-expanded={menu} onClick={() => setMenu(!menu)}>{menu ? <X/> : <Menu/>}</button><nav className={menu ? 'public-nav is-open' : 'public-nav'} aria-label="Main navigation">{orientation.slice(0,4).map(item => <a aria-current={path === item.path ? 'page' : undefined} key={item.path} href={item.path}>{item.nav}</a>)}</nav><div className="account-actions"><a className="guest-nav" href="/training">Sign in as Guest</a><a className="gold-button" href="/profile">Create Profile</a></div></header>

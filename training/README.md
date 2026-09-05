@@ -8,6 +8,8 @@ The public landing page and five orientation pages introduce SOC work. Six self-
 
 ## Why
 
+The separate `/simulation` route restores Reporter intake, the Analyst queue/investigation/playbooks, and SOC Lead oversight. It bundles tested copies of the repository's sample JSON, uses the original scoring thresholds, and keeps its browser state separate from guided progress. Enter through **Incident Simulator** under **Field guide**. See the root README for a full role-switching walkthrough and the browser simulation's limits.
+
 Practise evidence-led triage and proportionate response without live infrastructure, real incident data, or shared demo accounts. Scores are practice feedback, not certification. Written handovers are self-reviewed against an example and checklist.
 
 ## How

@@ -6,6 +6,38 @@
 
 Lighthouse SOC is built around one question: can a junior analyst turn an incoming signal into a clear, evidence-led next action? The training lab offers six guided investigations, evidence records, decision feedback, a working notebook, and downloadable practice reports. The original Streamlit incident simulator retains SQLite persistence, role-based screens, and a tested incident lifecycle.
 
+## Browser Incident Simulator
+
+Open [Incident Simulator](https://lighthouse-soc.vercel.app/simulation), or choose **Incident Simulator** beneath **Field guide** in the training sidebar. The existing guided training, skills, profile, and progress remain available.
+
+### Implementation
+
+The browser simulator restores the original role workflow using the repository's six sample alerts, asset and identity records, IP reputation fixtures, and response playbooks (deployment copies checked against the originals by tests). Reporter intake creates and enriches an incident; analysts filter the queue, inspect evidence and scoring, assign themselves, check playbook steps, save internal or reporter-visible notes, and record escalation, containment, closure, or false positives. SOC Lead provides backlog, priority, assignment, status counts, incident oversight, and audit history.
+
+```mermaid
+flowchart LR
+  Reporter[Reporter: submit signal] --> Incident[Incident: enrich and score]
+  Incident --> Analyst[Analyst: investigate and document]
+  Analyst --> Response[Record simulated response]
+  Response --> Lead[SOC Lead: review backlog and audit]
+  Response --> Tracking[Reporter: track status and shared notes]
+```
+
+### Walkthrough and validation
+
+1. Select **Reporter** and submit a fictional signal (for example, identity `olivia.chen`, asset `FIN-WS-01`, IP `203.0.113.19`).
+2. Switch to **Analyst** and open the newly assigned incident ID in the queue.
+3. Inspect enrichment and the additive P1–P5 explanation; assign the incident and practise the response playbook.
+4. Save an evidence-based note, optionally share it with the reporter, then record a response.
+5. Switch to **SOC Lead** to review the updated backlog and incident audit. Return to Reporter to see the shared update.
+6. Reload to resume. **Reset simulation** restores the six fixtures after confirmation and preserves guided training/profile data.
+
+Automated UI tests cover this complete role-switching flow, reload, reset isolation, internal-note visibility, invalid saved data, and unavailable storage. Scoring follows `app/services/scoring.py`; priorities are recalculated instead of trusting fixture labels (INC-2006's inputs total 8, so it displays P3).
+
+### Assumptions and risk notes
+
+This is a single-browser practice environment, not a shared incident service. Simulation state uses a separate `lighthouse-simulation-v1` local-storage key. Role switching is not authentication or a security boundary. Enrichment is synthetic; unknown indicators remain unknown. Original attachment names are references, not downloadable evidence files. Containment and other response actions only update fictional records. No live systems are contacted. Use fictional information only. The original Python/SQLite application remains available below for its server-side role checks and database workflow.
+
 ## Training platform · v0.3
 
 **[Visit Lighthouse](https://lighthouse-soc.vercel.app)** — hosted on Vercel's free Hobby plan. Start as a guest; progress stays on your device.

@@ -1,0 +1,124 @@
+.simulation .nav {
+  text-decoration: none;
+}
+.sim-roles {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin: 24px 0;
+}
+.sim-metrics {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+.sim-metrics strong {
+  display: block;
+  font-size: 30px;
+  margin-top: 12px;
+}
+.sim-form,
+.sim-detail {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+.sim-wide,
+.sim-form h3 {
+  grid-column: 1/-1;
+}
+.simulation label {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 12px 0;
+  font-weight: 600;
+}
+.simulation input,
+.simulation select,
+.simulation textarea {
+  font: inherit;
+  padding: 12px;
+  border: 1px solid #bcc8d6;
+  border-radius: 6px;
+  background: white;
+  color: #0f2742;
+  max-width: 100%;
+  width: 100%;
+  box-sizing: border-box;
+}
+.simulation textarea {
+  min-height: 110px;
+  resize: vertical;
+}
+.simulation .sim-step {
+  flex-direction: row;
+  align-items: flex-start;
+  font-weight: 400;
+}
+.sim-step input {
+  width: auto;
+  margin-top: 4px;
+}
+.sim-filters {
+  display: flex;
+  gap: 20px;
+}
+.sim-filters label {
+  flex: 1;
+}
+.sim-table {
+  overflow-x: auto;
+}
+.sim-table table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+.sim-table td,
+.sim-table th {
+  padding: 14px 10px;
+  border-bottom: 1px solid #e1e7ee;
+}
+.sim-table small {
+  display: block;
+  margin-top: 4px;
+}
+.simulation pre {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  background: #f0f4f8;
+  padding: 16px;
+  font-size: 13px;
+}
+.sim-note {
+  white-space: pre-wrap;
+}
+.simulation dd {
+  margin: 6px 0 16px;
+}
+.simulation footer {
+  margin-top: 32px;
+}
+.simulation li {
+  overflow-wrap: anywhere;
+  margin-bottom: 8px;
+}
+@media (max-width: 900px) {
+  .sim-metrics {
+    grid-template-columns: 1fr 1fr;
+  }
+  .sim-form,
+  .sim-detail {
+    grid-template-columns: 1fr;
+  }
+  .sim-filters {
+    flex-direction: column;
+    gap: 0;
+  }
+}
+@media (max-width: 500px) {
+  .sim-metrics {
+    grid-template-columns: 1fr;
+  }
+}
