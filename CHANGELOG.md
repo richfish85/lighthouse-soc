@@ -1,5 +1,17 @@
 # Lighthouse SOC Changelog
 
+## v0.3 — 2026-09-05
+
+Public URL: [lighthouse-soc.vercel.app](https://lighthouse-soc.vercel.app), hosted on the Vercel Hobby plan.
+
+- Added the public landing page, About, SOC overview, analyst role, skills orientation, and learning-loop pages with direct guest entry.
+- Implemented the supplied signal-tower Lighthouse logo across the public site and workspace.
+- Added Analyst Skills with 23 reusable capabilities, mapped decision evidence, related skills, and non-binary practice levels. Repeated demonstrations require distinct cases; handovers remain self-reviewed.
+- Replaced disappearing notebook placeholders with editable template text in web and Streamlit training. Template labels do not count towards the required written response.
+- Added a clearly labelled device-local profile that preserves guest progress and does not imply cloud authentication or sync.
+- Added a static React/Vite Vercel deployment configuration for the free Hobby plan, retaining the legacy Sites build separately.
+- Added regression coverage for orientation links, template persistence, skill evidence, and local profile handling. Local validation: 27 Python tests and 28 web tests passed, plus typecheck, lint, and production build.
+
 ## v0.2 — 2026-09-05
 
 - Added six guided synthetic investigations, 18 evidence records, 18 scored decisions, explanations, and handover self-review.

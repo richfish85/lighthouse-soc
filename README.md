@@ -6,13 +6,18 @@
 
 Lighthouse SOC is built around one question: can a junior analyst turn an incoming signal into a clear, evidence-led next action? The training lab offers six guided investigations, evidence records, decision feedback, a working notebook, and downloadable practice reports. The original Streamlit incident simulator retains SQLite persistence, role-based screens, and a tested incident lifecycle.
 
-## Training Lab · v0.2
+## Training platform · v0.3
 
-**[Try the public training demo](https://lighthouse-soc-training.richfish85245111.chatgpt.site)** — no learner account required; progress stays on your device.
+**[Visit Lighthouse](https://lighthouse-soc.vercel.app)** — hosted on Vercel's free Hobby plan. Start as a guest; progress stays on your device.
+
+The previous [Sites demo](https://lighthouse-soc-training.richfish85245111.chatgpt.site) remains a separate older version. Browser-local records do not automatically transfer between domains.
 
 - Six cases covering phishing, identity, endpoint activity, data exposure, detection tuning, and incident handover.
+- A public landing page and SOC orientation pathway, with immediate guest access.
+- Analyst Skills: 23 capabilities linked to case decisions and honest practice evidence.
 - Briefing → evidence room → three decisions → explained debrief.
-- Browser-local progress, retry support, and Markdown practice reports.
+- Editable handover templates, browser-local progress, retry support, and Markdown practice reports.
+- Optional device-local profile; no online sign-in or cross-device sync.
 - The same curriculum is available in the local Streamlit Training Lab.
 - Written handovers use an example and self-review checklist; only decisions are automatically scored.
 
@@ -112,7 +117,7 @@ The MVP favours portability and explainability over production infrastructure:
 - Rule-based scoring keeps priority decisions reviewable.
 - Seeded login is suitable for a local demo; real authentication is future work.
 - External enrichment is represented by synthetic JSON context; no live customer or production data is used.
-- The React/Vinext web training surface is independently deployable from `training/`. It does not expose the local incident database or seeded logins.
+- The React/Vite web platform is independently deployable from `training/` as static assets on Vercel. It does not expose the local incident database or seeded logins.
 
 ## Screenshots
 

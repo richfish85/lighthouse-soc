@@ -1,0 +1,17 @@
+Situation / alert:
+
+Affected identity or asset:
+
+Timeline (UTC):
+
+Facts and evidence IDs:
+
+Assumptions / alternative explanations:
+
+Unknowns and visibility limits:
+
+Actions completed:
+
+Recommended next action and reason:
+
+Next owner / escalation:

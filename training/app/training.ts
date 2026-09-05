@@ -1,4 +1,5 @@
 import dataset from './cases.json';
+import { handoverContent } from './handover';
 export type Attempt = { answers: Record<string, number>; notes: string; submitted: boolean; tries: number };
 export type Progress = Record<string, Attempt>;
 type Case = (typeof dataset.cases)[number];
@@ -21,7 +22,7 @@ export function readProgress(raw: string | null): Progress {
         if (Number.isInteger(value) && value >= 0 && value < q.options.length) answers[q.id] = value;
       }
       const notes = typeof a.notes === 'string' ? a.notes.slice(0, 12000) : '';
-      result[c.id] = { answers, notes, submitted: a.submitted === true && Object.keys(answers).length === c.questions.length && notes.trim().length >= 40, tries: Number.isSafeInteger(a.tries) && a.tries >= 0 ? a.tries : 0 };
+      result[c.id] = { answers, notes, submitted: a.submitted === true && Object.keys(answers).length === c.questions.length && handoverContent(notes).length >= 40, tries: Number.isSafeInteger(a.tries) && a.tries >= 0 ? a.tries : 0 };
     }
     return result;
   } catch { return {}; }

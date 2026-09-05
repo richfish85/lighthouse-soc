@@ -1,7 +1,7 @@
 import json
 from pathlib import Path
 import pytest
-from app.services.training import assess, load_cases
+from app.services.training import assess, load_cases, HANDOVER_TEMPLATE, handover_content
 
 CASES = load_cases()
 
@@ -46,9 +46,18 @@ def test_training_ui_has_no_errors():
     app = AppTest.from_file(str(entrypoint)).run()
     assert not app.exception
     assert app.title[0].value == "Lighthouse SOC · Training Lab"
+    assert app.text_area[0].value == HANDOVER_TEMPLATE
     for q in CASES[0]["questions"]:
         next(r for r in app.radio if r.label == q["prompt"]).set_value(q["answer"])
     app.text_area[0].set_value(CASES[0]["handover"])
     next(b for b in app.button if b.label == "Submit investigation").click().run()
     assert not app.exception
     assert app.metric[0].value == "100%"
+
+def test_template_headings_are_not_assessed_as_written_work():
+    c = CASES[0]
+    answers = {q["id"]: q["answer"] for q in c["questions"]}
+    assert handover_content(HANDOVER_TEMPLATE) == ""
+    with pytest.raises(ValueError):
+        assess(c["id"], answers, HANDOVER_TEMPLATE)
+    assert handover_content(HANDOVER_TEMPLATE.replace("Situation / alert:", "Situation / alert: Phishing")) == "Phishing"

@@ -113,4 +113,6 @@ The value is also showing that we understand:
 
 ## Training extension · 2026-09-05
 
+The v0.3 profile is only a display name and learning focus stored on the learner's browser. It is not authentication or an identity boundary. Guest access includes all cases. Skill evidence is computed from current local answers and is not tamper-resistant certification. The Vercel build serves static assets; no learner data API or paid database is provisioned. The old Sites origin retains any old browser-local records separately.
+
 The public training lab serves synthetic curriculum and a client-side answer key. It does not connect to the incident SQLite database, accept uploads, collect learner accounts, or run response commands. Browser-local notes and answers are unencrypted device-local state, visible to others using that browser profile. Do not use real incident data. Scores can be inspected or changed locally and are not verified examinations. Imported local state is validated before use, and text is rendered through React rather than injected HTML. The optional WebMCP tool only opens an existing case; it cannot submit answers or execute response actions. The original seeded-role simulator remains a local-only tool.

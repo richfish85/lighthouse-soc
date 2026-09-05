@@ -1,18 +1,20 @@
 {
   "name": "lighthouse-soc-training",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "private": true,
   "engines": {
     "node": ">=22.13.0"
   },
   "scripts": {
-    "dev": "vinext dev",
-    "build": "vinext build",
+    "dev": "vite --config vite.static.config.ts",
+    "build": "vite build --config vite.static.config.ts",
     "start": "wrangler dev --config dist/server/wrangler.json",
-    "lint": "oxlint app tests vite.config.ts vitest.config.ts next.config.ts",
+    "lint": "oxlint app tests client.tsx vite.static.config.ts vite.config.ts vitest.config.ts next.config.ts",
     "format": "oxfmt",
     "test": "vitest run",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "build:sites": "vinext build",
+    "dev:sites": "vinext dev"
   },
   "dependencies": {
     "@base-ui/react": "1.7.0",

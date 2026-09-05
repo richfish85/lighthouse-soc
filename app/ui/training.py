@@ -3,7 +3,7 @@ from __future__ import annotations
 
 import json
 import streamlit as st
-from app.services.training import assess, load_cases
+from app.services.training import assess, load_cases, HANDOVER_TEMPLATE
 
 
 def render() -> None:
@@ -41,9 +41,9 @@ def render() -> None:
                     format_func=lambda i, q=q: q["options"][i], index=None,
                     disabled=bool(attempt.get("result")))
             notes = st.text_area("Your handover: facts, evidence IDs, scope, unknowns, actions, and next owner",
-                                 value=attempt.get("notes", ""), max_chars=12000, height=200,
+                                 value=attempt.get("notes", HANDOVER_TEMPLATE), max_chars=12000, height=320,
                                  disabled=bool(attempt.get("result")))
-            st.caption("Only decisions are automatically scored. Written handovers require self-review.")
+            st.caption("Keep the template headings and add your findings. Headings do not count as your response. Only decisions are automatically scored; handovers require self-review.")
             if st.form_submit_button("Submit investigation", disabled=bool(attempt.get("result"))):
                 try:
                     result = assess(case_id, answers, notes)

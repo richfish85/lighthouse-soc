@@ -2,7 +2,7 @@
 
 ## What
 
-Lighthouse SOC v0.2 adds a guided training platform to the local Streamlit incident simulator. It supports an individual learner practising synthetic investigations; cohort administration and secure examinations are outside the current scope.
+Lighthouse SOC v0.3 adds public SOC orientation, a reusable Analyst Skills map, editable handover templates, and a device-local profile to the guided training platform. It supports an individual learner practising synthetic investigations; cloud accounts, cohort administration, and secure examinations are outside the current scope.
 
 ## v0.1 — Presentable baseline
 

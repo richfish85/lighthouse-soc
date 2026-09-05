@@ -1,5 +1,26 @@
 # Lighthouse SOC Architecture
 
+## Public platform and capability map · v0.3
+
+The primary web deployment is a static React/Vite application on Vercel Hobby. Public orientation, guest training, and optional device-local profiles share the supplied Lighthouse brand. The previous Sites deployment remains a separate origin and its browser data is not migrated automatically.
+
+`training/app/skills.ts` defines reusable skills independently of the learning-path order. Each assessed skill points to existing case/question IDs; contextual and written practice has no automatic assessment. Proficiency is derived from current submitted evidence: Introduced (library entry), Practised (linked case submitted), Demonstrated (correct mapped decision), Repeatedly demonstrated (two distinct successful cases). Retries do not create extra demonstrations, and handover writing stays self-reviewed.
+
+```mermaid
+flowchart LR
+    Public[Public orientation] --> Guest[Guest training]
+    Library[Skill library] --> Mapping[Case and decision references]
+    Mapping --> Evidence[Submitted decision evidence]
+    Evidence --> Levels[Derived practice levels]
+    Cases[Synthetic cases] --> Path[Curated learning path]
+    Cases --> Mapping
+    Guest --> Local[Origin-local notes and answers]
+    Local --> Evidence
+    Profile[Optional local profile] --> Local
+```
+
+Handover labels are real editable starter text and are excluded from minimum-content checks. Existing freeform notes remain compatible. No server receives profile names, notes, answers, or skill scores.
+
 ## Training platform extension · v0.2
 
 The shared `data/training_cases.json` curriculum feeds `app/services/training.py` and its independent web delivery copy in `training/app/cases.json`. Python tests require exact parity. Streamlit training uses session state without opening the incident database. The React/Vinext lab uses versioned browser local storage and generates local Markdown reports; it has no learner-data API. Decision scores are recomputed from the rubric rather than trusted from stored scores. The original incident architecture below remains in use for the Incident Simulator.

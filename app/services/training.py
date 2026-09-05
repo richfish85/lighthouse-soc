@@ -5,6 +5,17 @@ import json
 from pathlib import Path
 
 CASE_PATH = Path(__file__).resolve().parents[2] / "data" / "training_cases.json"
+HANDOVER_TEMPLATE = (CASE_PATH.parent / "handover_template.txt").read_text(encoding="utf-8")
+
+
+def handover_content(notes: str) -> str:
+    labels = [line for line in HANDOVER_TEMPLATE.splitlines() if line]
+    result = []
+    for line in notes.splitlines():
+        line = line.strip()
+        label = next((label for label in labels if line.startswith(label)), None)
+        result.append(line[len(label):] if label else line)
+    return "\n".join(result).strip()
 
 
 def load_cases() -> list[dict]:
@@ -15,7 +26,7 @@ def assess(case_id: str, answers: dict[str, int], notes: str) -> dict:
     case = next((c for c in load_cases() if c["id"] == case_id), None)
     if case is None:
         raise ValueError("Unknown training case")
-    if not isinstance(notes, str) or not 40 <= len(notes.strip()) <= 12000:
+    if not isinstance(notes, str) or not 40 <= len(handover_content(notes)) or len(notes) > 12000:
         raise ValueError("Write a handover between 40 and 12,000 characters for self-review.")
     if set(answers) != {q["id"] for q in case["questions"]}:
         raise ValueError("Answer every decision before submitting.")
