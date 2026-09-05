@@ -154,16 +154,17 @@ The MVP favours portability and explainability over production infrastructure:
 ## Screenshots
 
 ### Login gateway
-<img width="1845" height="918" alt="Lighthouse SOC login gateway with role-based demo access" src="https://github.com/user-attachments/assets/7e031f33-b5b5-41b6-b990-24d4ad39d6ae" />
+<img width="1919" height="907" alt="Lighthouse SOC login gateway with role-based demo access" src="https://github.com/user-attachments/assets/890b7f44-ab7a-41b4-924f-b6f9ca952889" />
 
 ### Analyst queue
-<img width="1919" height="907" alt="Analyst queue showing prioritised SOC incidents and filtering controls" src="https://github.com/user-attachments/assets/dd67d515-bcda-4022-bedf-cab6784f5ca6" />
+<img width="1919" height="905" alt="Analyst queue showing prioritised SOC incidents and filtering controls" src="https://github.com/user-attachments/assets/4ffe57e1-ec01-400a-aad6-faa43f41606d" />
 
 ### Investigation view
-<img width="1919" height="906" alt="Incident investigation view with enrichment, playbook actions, and analyst notes" src="https://github.com/user-attachments/assets/b275dc24-e6ec-481e-b68b-ac510645e26d" />
+<img width="1362" height="895" alt="Incident investigation view with enrichment, playbook actions, and analyst notes" src="https://github.com/user-attachments/assets/efbcc0eb-25ac-4624-80a2-df95c010cbd7" />
 
 ### Admin dashboard
-<img width="1919" height="908" alt="Admin dashboard showing SOC metrics, incident trends, and oversight panels" src="https://github.com/user-attachments/assets/9d9e72fd-e6de-4a23-aa09-d87f5c6832c9" />
+<img width="1382" height="774" alt="Admin dashboard showing SOC metrics, incident trends, and oversight panels" src="https://github.com/user-attachments/assets/90a1d62f-648c-4708-8a1c-38cbe1049863" />
+
 
 ## License
 
