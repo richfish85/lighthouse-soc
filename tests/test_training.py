@@ -42,7 +42,8 @@ def test_shared_curriculum_matches_web_copy():
 
 def test_training_ui_has_no_errors():
     from streamlit.testing.v1 import AppTest
-    app = AppTest.from_file("app/main.py").run()
+    entrypoint = Path(__file__).resolve().parents[1] / "app" / "main.py"
+    app = AppTest.from_file(str(entrypoint)).run()
     assert not app.exception
     assert app.title[0].value == "Lighthouse SOC · Training Lab"
     for q in CASES[0]["questions"]:
